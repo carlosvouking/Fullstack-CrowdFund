@@ -1,0 +1,13 @@
+node_modules
+.env
+typechain
+deployments
+install_nvm.sh
+
+#Hardhat files
+cache
+artifacts
+gas-report.txt
+coverage.json
+coverage
+
