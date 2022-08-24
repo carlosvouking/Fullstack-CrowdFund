@@ -91,32 +91,19 @@ const Welcome = () => {
            <div className="flex md:flex-row flex-col items-start justify-between md:p-20 py-12 px-4">            
 
               <div className="flex flex-1 justify-start flex-col mf:mr-10">           
-                <h1 className="text-3xl sm:text-5xl text-yellow-300 text-gradient py-">
-                    Send Eth <br /> all over the world
+                <h1 className="text-3xl sm:text-4xl text-yellow-300 text-gradient py-3">
+                    Fund Me - Crowdfunding Tool
                 </h1>
-                <p className="text-left mt-5 text-white font-light md:w-9/12 w-11/12 text-base">                    
-                    Send of funds by cryptocurrency. Easily transfer eth via cryptocurrency instantly - 24/7.
-                </p> 
+                {/* <p className="text-center mt-5 text-white font-light md:w-9/12 w-11/12 text-base">                    
+                    Send of funds by cryptocurrency. Easily transfer eth via cryptocurrency instantly
+                </p>  */}
                 {/* if there is no current metamask account, render the button, en hide this button if there is an account connected */}
                 {!currentAccount && (
                     <button type="button" className="flex flex-row justify-center items-center my-5 bg-[#d69e3e] p-3 rounded-full cursor-pointer hover:bg-[#b7791f] hover:text-yellow-100" onClick={connectWallet}>
                       {/* <AiFillContacts className="text-white mr-3" /> */}
                       <p className="text-white text-base text-lg font-bold">{/*Connecter le Porte-monnaie*/} Connect your wallet</p> 
                     </button>
-                  )}
-                <div className="grid sm:grid-cols-1 grid-cols-1 w-full mt-10">
-                    <div className={`rounded-xl ${commonStylesOurValues}`}>
-                        Speed -- Security -- Almost no costs
-                    </div>
-                </div>
-                <div className="grid sm:grid-cols-3 grid-cols-2 w-full mt-5 ">
-                    <div className={`rounded-tl-2xl ${commonStyles}`}>Fryc / USD: ? </div>
-                    <div className={commonStyles}>Fryc / Euro: ?</div>
-                    <div className={`rounded-tr-2xl ${commonStyles}`}>Eth / USD: ? </div>
-                    <div className={`rounded-bl-2xl ${commonStyles}`}>Euro / Fcfa: ? </div>
-                    <div className={commonStyles}>USD / Fcfa: ?</div>
-                    <div className={`rounded-br-2xl ${commonStyles}`}>Eth / Euro: ? </div>
-                </div>
+                  )}               
               </div>  
 
 
@@ -125,7 +112,7 @@ const Welcome = () => {
                  <div className="p-5 sm:w-96 w-full flex flex-col justify start items-center white-glassmorphism">
                       <div className='flex flex-col justify-center items-center'>
                           <p className='text-yellow-400 font-semibold text-lg'>Crowdfunding</p> 
-                          <p className='text-white font-light'>Project funding  ( min $50 USD in ETH )</p> 
+                          <p className='text-white font-light'>Project funding  ( in ETH )</p> 
                       </div>
 
                       {/* Eth card box */}
@@ -150,8 +137,8 @@ const Welcome = () => {
                       {/* Field data */}
                       <Input id="addressToFund" name="addressToFund" type="text" value={contractAddress}/> 
                       <Input placeholder="eth Amount (0.1)" id="ethAmount" name="ethAmount" type="number" handleChange = {handleChange} /> 
-                      <Input placeholder="Keyword" id="keywordFund" name="keywordFund" type="text" handleChange = {handleChange} /> 
-                      <Input placeholder="message" id="messageFund" name="messageFund" type="text" handleChange = {handleChange} />                   
+                      <Input placeholder="give a eyword" id="keywordFund" name="keywordFund" type="text" handleChange = {handleChange} /> 
+                      <Input placeholder="give a message" id="messageFund" name="messageFund" type="text" handleChange = {handleChange} />                   
                       
                       <div className="h-[1px] w-full bg-yellow-100 mt-2" />
                       {isLoading ? (
@@ -180,55 +167,8 @@ const Welcome = () => {
                             </button>
                       )}     
                  </div>    
-              </div> 
-
-               
-              {/* Peer-2-Peer box */} 
-              <div className="flex flex-col flex-1 items-center justify-start w-full mf:mt-0 mt-10 mr-10 ">             
-                 <div className="p-5 sm:w-96 w-full flex flex-col justify start items-center white-glassmorphism">
-                      <div className='flex flex-col justify-center items-center'>
-                          <p className='text-yellow-100 font-semibold text-lg'>Peer-2-Peer transfer</p> 
-                          <p className='text-white font-light'>Send some eth to a buddy</p> 
-                      </div>
-
-                      {/* Eth card box */}
-                      <div className=" p-3 justify-end items-start flex-col rounded-xl h-45 w-full sm:w-72 my-5 eth-card gold-glassmorphism">
-                          <div className="flex justify-between flex-col w-full h-full">
-                            <div className="flex justify-between items-start">
-                                <div className="w-10 h-10 rounded-xl border-2 border-white flex justify-center items-center">
-                                    <SiTruenas fontSize={22} color="" className={`text-yellow-100`} />
-                                </div>
-                                <div fontSize={18} color="" className={`text-yellow-100`}>
-                                  <BsInfoCircle />
-                                </div> 
-                            </div>
-                            <div className="mt-3">
-                                <p className="text-white font-semibold text-sm"></p>
-                                <p className="text-white font-semibold text-sm"> Connected Address: {shortenAddress(currentAccount)} </p>
-                                <p className="text-white font-semibold text-lg mt-1">ETH</p>
-                            </div>
-                          </div>
-                      </div>  
-                      
-                  
-                      {/* Field data */}
-                      <Input placeholder="Recipient address" name="addressTo" type="text" handleChange = {handleChange} /> 
-                      <Input placeholder="Amount (Eth)" name="amount" type="number"  handleChange = {handleChange} /> 
-                      <Input placeholder="Keyword (Gif)" name="keyword" type="text"  handleChange = {handleChange} /> 
-                      <Input placeholder="Add message" name="message" type="text"  handleChange = {handleChange} />                   
-                      
-                      <div className="h-[1px] w-full bg-yellow-100" />
-
-                      {isLoading ? (
-                      <Loader />
-                      ) : (
-                            <button type="button" onClick={handleSubmit} className="text-white w-full mt-2 border-[1px] p-2 border-[gray] rounded-full cursor-pointer">
-                              {/* Transférer */} Send some Eth
-                            </button>
-                      )}
-                 </div>    
-              </div>   
-              
+              </div>              
+             
            </div>           
         </div>    
     );

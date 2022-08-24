@@ -19,17 +19,17 @@ const Navbar = () => {
 
     return (
        <nav className="w-full flex md:justify-center justify-between items-center p-4">
-        <div className="md:flex-[0.5] flex-initial justify-center items-center">
+        {/* <div className="md:flex-[0.5] flex-initial justify-center items-center">
             <img src={logo} alt="logo" className="w-32 cursor-pointer" />
-        </div>
-        <ul className="text-white md:flex hidden list-none flex-row justify-between items-center flex-initial">
-            {["Dashboard", "Transfer","Crypto-Education", "CryptoWallet"].map((item, index) => (
+        </div> */}
+        {/* <ul className="text-white md:flex hidden list-none flex-row justify-between items-center flex-initial">
+            {["Dashboard"].map((item, index) => (
                <NavBarItem key={item + index} title={item} />
             ))}
             <li className="text-white bg-[#d69e3e] py-2 px-7 mx-4 rounded-full cursor-pointer hover:bg-[#b7791f] hover:text-yellow-200">
                Login
             </li>
-        </ul>
+        </ul> */}
 
         {/* responsiveness...mobile screens navigation */}
         <div className="flex relative">
