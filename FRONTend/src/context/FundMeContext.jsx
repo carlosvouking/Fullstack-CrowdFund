@@ -4,15 +4,14 @@ This to prevent writing the same logic accross all our components...
 The logic comes here and will be called in all the components where needed.
  */
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import render from "react";
-
 import  ReactDOM from "react-dom/client";
-
 import { ethers } from "ethers";
 import { contractABI, contractAddress } from "../utils/constants";
 import App  from "../App";
 import { RiContactsBookLine } from "react-icons/ri";
+import  Modal_fund from "../components/Modals/Modal_fund";
 
 
 export const FundMeContext = React.createContext();
@@ -53,6 +52,9 @@ export const FundMeProvider = ({children}) => {
 
    const [transactions, setTransactions] = useState([]);   
    const [crowdfundTransactions, setCrowdFundTransactions] = useState([]);
+
+   const [showModal, setShowModal] = useState(false);
+
    
 
    // and also a 'handleChange' to interact with the input and accept keyboard press as events(e)
@@ -163,18 +165,25 @@ export const FundMeProvider = ({children}) => {
     };
 
     // connecting to the metamask wallet
-    const connectWallet = async () => {
-        try {
+    const connectWallet = async () => {        
+        try {             
+            // openModal_fund();                    
             if(!ethereum) return alert("Vous devriez installer Metamask !");
             // requesting all the accounts in Metamask to allow the user to choose which account to connect.
-            const accounts = await ethereum.request({method: "eth_requestAccounts"});  
+            const accounts = await ethereum.request({method: "eth_requestAccounts"});              
             // connect to the 1rst account
-            setCurrentAccount(accounts[0]);
-            window.location.reload();
+            setCurrentAccount(accounts[0]);  
+            // openModal_fund();                       
+            window.location.reload();                                                 
         } catch (error) {
-            console.log(error);
+            console.log(error);           
             throw new Error("Aucun objet ethereum détecté !");
-        }
+        }         
+    };
+
+
+    const openModal_fund = () => {
+         setShowModal(prev => !prev);
     };
     
 
@@ -260,7 +269,7 @@ export const FundMeProvider = ({children}) => {
          } catch(error) {
           console.log(error);
          } 
-    }
+    };
 
 
     // Fund contract
@@ -268,10 +277,11 @@ export const FundMeProvider = ({children}) => {
         const {addressToFund ,ethAmount, keywordFund, messageFund} = formDataFund;      
      
         console.log(`Start funding with ${ethAmount}...`);
+        
         if (typeof window.ethereum !== "undefined") {                     
                 
             try {     
-                              
+                             
                 const provider = new ethers.providers.Web3Provider(ethereum);   
                 const signer = provider.getSigner();
                 const fundMeContract = new ethers.Contract(contractAddress, contractABI, signer);
@@ -288,13 +298,14 @@ export const FundMeProvider = ({children}) => {
                 //..Ooh 'listenForMiningTransaction' is returning a promise, so wait for the promise to resolve or to reject
                 await listenForMiningTransaction(transactionResponse, provider);
                 console.log("All Done !")  
-                
+                  
                 sendCrowFundTransactionToBlockchain();
                 getAllCrowFundTransactions();
-
+                openModal_fund();            
+ 
             } catch (error) {
                 console.log(error);
-            }           
+            }                     
         }       
     };
 
@@ -327,7 +338,7 @@ export const FundMeProvider = ({children}) => {
                 console.log(error);
             }
         }
-    }
+    };
 
 
     const withdrawContractFunds = async () => {
@@ -348,7 +359,7 @@ export const FundMeProvider = ({children}) => {
 
 
     // checking the wallet connection at the start of the application...
-    // useEffect listsens to 'transactionCount' and calls the functions 'heckWalletConnection' and 'checkTransactionExistance' to reflect it on the front end
+    // useEffect listsens to 'transactionCount' and calls the functions 'checkWalletConnection' and 'checkTransactionExistance' to reflect it on the front end
     useEffect(() => {
         checkWalletConnection();
         checkTransactionExistance();
@@ -356,7 +367,7 @@ export const FundMeProvider = ({children}) => {
 
   
     return (
-        <FundMeContext.Provider  value={{transactionCount, crowfundTransactionCount, connectWallet, currentAccount, formData, setFormData, formDataFund, setFormDataFund, handleChange, sendTransaction, fund, withdrawContractFunds,sendCrowFundTransactionToBlockchain, getAllCrowFundTransactions, getContractBalance, transactions, crowdfundTransactions, isLoading}}>        
+        <FundMeContext.Provider  value={{ Modal_fund, showModal, setShowModal,transactionCount, crowfundTransactionCount, connectWallet, currentAccount, formData, setFormData, formDataFund, setFormDataFund, handleChange, sendTransaction, fund, withdrawContractFunds,sendCrowFundTransactionToBlockchain, getAllCrowFundTransactions, getContractBalance, transactions, crowdfundTransactions, isLoading}}>        
             { children }
         </FundMeContext.Provider>
     );  

@@ -19,6 +19,9 @@ const Navbar = () => {
 
     return (
        <nav className="w-full flex md:justify-center justify-between items-center p-4">
+         <div className='text-amber-300 text-2xl font-semibold flex-initial justify-center cursor-pointer'>
+            FundMe
+         </div>
         {/* <div className="md:flex-[0.5] flex-initial justify-center items-center">
             <img src={logo} alt="logo" className="w-32 cursor-pointer" />
         </div> */}
@@ -45,7 +48,7 @@ const Navbar = () => {
                   <li className='text-xl w-full my-2'>
                        <AiOutlineClose onClick={() => setToggleMenu(false)} />
                   </li>
-                   {["Dashboard", "Transfer","Crypto-Education", "CryptoWallet"].map((item, index) => (
+                   {["Dashboard"].map((item, index) => (
                     <NavBarItem key={item + index} title={item} />
                    ))}
               </ul>
