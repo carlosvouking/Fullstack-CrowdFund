@@ -14,9 +14,9 @@ Initialized with [vite](https://vitejs.dev/guide/)
 our smart contract is backed up by [hardhat](https://hardhat.org/hardhat-runner/docs/getting-started)
 
 
+![Fund Me](/FRONTend//images/fundeme_shotscreen.png "Fund me contract")
 
 
-
-### * Tools ref:
+<!-- ### * Tools ref:
 [Best ReadMe reference](https://github.com/othneildrew/Best-README-Template#readme)
-[Chain list](https://chainlist.org/)
+[Chain list](https://chainlist.org/) -->
