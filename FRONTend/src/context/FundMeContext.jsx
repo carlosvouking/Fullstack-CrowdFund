@@ -12,6 +12,7 @@ import { contractABI, contractAddress } from "../utils/constants";
 import App  from "../App";
 import { RiContactsBookLine } from "react-icons/ri";
 import  Modal_fund from "../components/Modals/Modal_fund";
+import  Modal_balance from "../components/Modals/Modal_balance";
 
 
 export const FundMeContext = React.createContext();
@@ -54,6 +55,7 @@ export const FundMeProvider = ({children}) => {
    const [crowdfundTransactions, setCrowdFundTransactions] = useState([]);
 
    const [showModal, setShowModal] = useState(false);
+   const [showModal_balance, setShowModal_balance] = useState(false);
 
    
 
@@ -181,10 +183,13 @@ export const FundMeProvider = ({children}) => {
         }         
     };
 
-
     const openModal_fund = () => {
          setShowModal(prev => !prev);
     };
+
+    const openModal_balance = () => {
+        setShowModal_balance(prev => !prev);
+   };
     
 
     const sendTransaction = async () => {
@@ -298,11 +303,11 @@ export const FundMeProvider = ({children}) => {
                 //..Ooh 'listenForMiningTransaction' is returning a promise, so wait for the promise to resolve or to reject
                 await listenForMiningTransaction(transactionResponse, provider);
                 console.log("All Done !")  
-                  
+                
                 sendCrowFundTransactionToBlockchain();
                 getAllCrowFundTransactions();
                 openModal_fund();            
- 
+                
             } catch (error) {
                 console.log(error);
             }                     
@@ -324,20 +329,20 @@ export const FundMeProvider = ({children}) => {
     };
 
     // reading from the Blockchain
-    const getContractBalance = async () => {
+    const getContractBalance = async () => {         
         if (typeof window.ethereum !== "undefined") {
             try {
                 /* J'ai besoin de: provider -- contractAddress pour lire sur le contrat */
                 const provider = new ethers.providers.Web3Provider(ethereum);
-                const contractBalance = await provider.getBalance(contractAddress);
-                
+                const contractBalance = await provider.getBalance(contractAddress);                
                 const parseContractBalance = ethers.utils.formatEther(contractBalance);   //easy read ethers formatted numbers 
                 console.log(`Contract balance: ${parseContractBalance}`);
-                
+                openModal_balance();                                                                            
             } catch (error) {
                 console.log(error);
-            }
+            }                               
         }
+                       
     };
 
 
@@ -363,11 +368,13 @@ export const FundMeProvider = ({children}) => {
     useEffect(() => {
         checkWalletConnection();
         checkTransactionExistance();
-    }, [transactionCount, crowfundTransactionCount]);           
+    }, [transactionCount, crowfundTransactionCount]);          
 
   
     return (
-        <FundMeContext.Provider  value={{ Modal_fund, showModal, setShowModal,transactionCount, crowfundTransactionCount, connectWallet, currentAccount, formData, setFormData, formDataFund, setFormDataFund, handleChange, sendTransaction, fund, withdrawContractFunds,sendCrowFundTransactionToBlockchain, getAllCrowFundTransactions, getContractBalance, transactions, crowdfundTransactions, isLoading}}>        
+        <FundMeContext.Provider  value={{ Modal_fund, Modal_balance, showModal, setShowModal,showModal_balance, setShowModal_balance,transactionCount, crowfundTransactionCount, connectWallet, currentAccount, 
+        formData, setFormData, formDataFund, setFormDataFund, handleChange, sendTransaction, fund, withdrawContractFunds,sendCrowFundTransactionToBlockchain, 
+        getAllCrowFundTransactions, getContractBalance, transactions, crowdfundTransactions, isLoading}}>        
             { children }
         </FundMeContext.Provider>
     );  

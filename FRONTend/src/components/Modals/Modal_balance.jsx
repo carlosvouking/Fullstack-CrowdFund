@@ -6,6 +6,8 @@ import {AiOutlineClose, AiOutlineCloseSquare} from "react-icons/ai";
 
 import { shortenAddress } from "../../utils/shortenAddress";
 import { FundMeContext } from "../../context/FundMeContext";
+import { ethers } from "ethers";
+import { contractAddress } from "../../utils/constants";
 
 
 
@@ -77,11 +79,17 @@ const CloseModalButton = styled(MdCancel)`
 `
 
 
-const Modal_fund = ({showModal, setShowModal}) => {
-    const {currentAccount, timestamp, formDataFund} = useContext(FundMeContext);   // calling these entities from FundMeContext provider   
-    const {addressToFund, ethAmount, keywordFund, messageFund} = formDataFund;
-    const modalRef = useRef();
-   
+const Modal_balance = ({showModal, setShowModal}) => {
+    const {currentAccount, timestamp, formDataFund, getContractBalance} = useContext(FundMeContext);   // calling these entities from FundMeContext provider   
+    const {addressToFund, ethAmount, keywordFund, messageFund} = formDataFund;   
+       
+    
+          // const provider = new ethers.providers.Web3Provider(ethereum);
+          // const contractBalance =  provider.getBalance(contractAddress);                
+          // const parseContractBalance = ethers.utils.formatEther(contractBalance);  //easy read ethers formatted numbers          
+                        
+ 
+    const modalRef = useRef();   
 
     const animation = useSpring({
         config: {
@@ -101,9 +109,9 @@ const Modal_fund = ({showModal, setShowModal}) => {
                                   
                     {/* <ModalImg src="../../images/logo_fryckio.png" alt="logo fryckio" /> */}                    
                     <ModalContent>
-                        <p>{ethAmount} Eth received </p>
+                        <p> Balance: </p>
                         {/* <p> Current account: {shortenAddress(currentAccount)} </p> */}
-                        <button onClick={() => setShowModal(prev => !prev)}>OK</button>
+                        <button className="" onClick={() => setShowModal(prev => !prev)}>OK</button>
                     </ModalContent>
                     <CloseModalButton className="text-yellow-800" aria-label="Close modal" onClick={() => setShowModal(prev => !prev)}  />
                     {/* <AiOutlineClose className="text-yellow-800 mt-10 mr-20 absolute w-32" onClick={() => setShowModal(prev => !prev)} /> */}                  
@@ -117,4 +125,4 @@ const Modal_fund = ({showModal, setShowModal}) => {
 }
 
 
-export default Modal_fund;
+export default Modal_balance;

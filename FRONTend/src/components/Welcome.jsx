@@ -20,7 +20,7 @@ const commonStyles = 'min-h-[70px] sm:px-0 px-2 sm:min-w-[120px] flex justify-ce
 const commonStylesOurValues = 'min-h-[40px] sm:px-0 px-2 sm:min-w-[120px] flex justify-center items-center border-[0.5px] border-gray-400 font-semibold font-light text-white'
 const Input = ({placeholder, name, type, value, handleChange }) => (
   <input 
-     className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-zinc-800 border-none text-sm gold-glassmorphism"
+     className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-zinc-400 border-none text-sm gold-glassmorphism"
      placeholder={placeholder}
       type={type} 
       step="0.0001"    
@@ -63,7 +63,9 @@ const Button = styled.button`
 
 
 const Welcome = () => {
-      const {Modal_fund, showModal, setShowModal, connectWallet, currentAccount, formData, getAllCrowFundTransactions, sendCrowFundTransactionToBlockchain, sendTransaction, formDataFund, fund,withdrawContractFunds, getContractBalance,  handleChange, isLoading} = useContext( FundMeContext );   // calling these entities from FundMeContext provider
+      const { Modal_fund, Modal_balance, showModal, showModal_balance, setShowModal, setShowModal_balance, connectWallet, currentAccount, formData, getAllCrowFundTransactions, sendCrowFundTransactionToBlockchain, 
+             sendTransaction, formDataFund, fund,withdrawContractFunds, getContractBalance,  handleChange, isLoading
+            } = useContext( FundMeContext );   // calling these entities from FundMeContext provider
       
       // handle transaction peer2peer
       const handleSubmit  = (e) => {
@@ -95,7 +97,7 @@ const Welcome = () => {
       
       const handleSubmit_ContractBalance = (e) => {       
          e.preventDefault; 
-        getContractBalance();
+        getContractBalance(); 
       };
 
       const handleSubmit_Withdraw = (e) => {     
@@ -106,10 +108,14 @@ const Welcome = () => {
     return (        
         <div className="flex w-full justify-center items-center">          
            <div className="flex md:flex-row flex-col items-start justify-between md:p-20 py-12 px-4">            
-              <div>
+              <div className="mb-3">
                  <Modal_fund showModal={showModal} setShowModal={setShowModal} />
                  <GlobalStyle />   
               </div>
+              <div className="mb-3">
+                 <Modal_balance showModal={showModal_balance} setShowModal={setShowModal_balance} />
+                 <GlobalStyle />   
+              </div> 
 
               <div className="flex flex-1 justify-start flex-col mf:mr-10">           
                 <h1 className="text-3xl sm:text-4xl text-yellow-300 text-gradient py-3">
@@ -183,15 +189,11 @@ const Welcome = () => {
                             </button>
                       )}
 
-                      <div className="h-[1px] w-full bg-yellow-100 mt-2" />
-                      {isLoading ? (
-                      <Loader />
-                      ) : (
+                      <div className="h-[1px] w-full bg-yellow-100 mt-2" />                     
                             <button type="button" onClick={handleSubmit_ContractBalance} className="text-white  w-full mt-2 border-[1px] p-2 border-[gray] rounded-full cursor-pointer gold-glassmorphism">
                               {/* Solde */} Balance
-                            </button>
-                      )}                       
-                 </div>    
+                            </button>                                         
+                      </div>   
               </div>              
              
            </div>           

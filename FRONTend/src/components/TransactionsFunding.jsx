@@ -10,7 +10,7 @@ import { contractAddress } from "../utils/constants";
 
 // Crowdfunding Txns
    const CrowFundTransactionsCard = ({ crowfundTransactionCount, addressToFund , addressFrom, timestamp, messageFund, keywordFund, ethAmount, url })  => {
-   const gifUrl = useFetchFund({ keywordFund})   
+   const gifUrl = useFetchFund({ keywordFund })    
    
    return (  
       
